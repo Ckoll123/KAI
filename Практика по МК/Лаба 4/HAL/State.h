@@ -10,7 +10,7 @@ public:
     State(bool (*p_pin_on_state)());
     
     void update_state();
-    bool update_state(bool state);
+    void update_state(bool state);
     bool get_pin_state() const;
     bool is_on() const;
     bool is_off() const;
