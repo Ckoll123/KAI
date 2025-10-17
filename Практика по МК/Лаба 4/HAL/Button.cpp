@@ -11,16 +11,20 @@ Button::Button(bool (*p_pin_on_state)(), float time_sample, float debounce_perio
 
 void Button::update_state() {
     bool pin_state = state.get_pin_state();
+    bool stable_state = state.is_on();
     
     if (pin_state != _prev_raw_state) {
-        _prev_raw_state = pin_state;
         _counter = 0.0;
+        _prev_raw_state = pin_state;
+    }else {
+        if(_counter < _debounce_period) {
+            _counter += _time_sample;
+        }
     }
 
-    if (_counter < _debounce_period) {
-        _counter += _time_sample;
-        return;
+    if(_counter >= _debounce_period){
+        stable_state = pin_state;
     }
 
-    state.update_state(pin_state);
+    state.update_state(stable_state);
 }

@@ -26,9 +26,6 @@ public:
     State state;
 
 private:
-    void _blink(float led_on_time_sec, float led_off_time_sec);
-
-private:
     void (*_p_LED_on)();
     void (*_p_LED_off)();
     void (*_p_LED_toggle)();
