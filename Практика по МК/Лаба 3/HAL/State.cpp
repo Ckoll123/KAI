@@ -1,7 +1,6 @@
 #include "HAL/State.h"
 
-State::State(bool (*p_pin_on_state)()) :
-    _p_pin_on_state(p_pin_on_state),
+State::State() :
     _previous_state(false),
     _on(false),
     _off(false),
@@ -9,8 +8,8 @@ State::State(bool (*p_pin_on_state)()) :
     _sw_on(false)
 {}
 
-void State::update_state() {
-    _on = _p_pin_on_state();
+void State::update_state(bool current_state) {
+    _on = current_state;
     _off = !_on;
     _sw_on = (!_previous_state && _on);
     _sw_off = (_previous_state && !_on);

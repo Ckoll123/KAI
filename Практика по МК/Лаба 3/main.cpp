@@ -12,7 +12,7 @@ volatile bool led1_turn_on = false;
 volatile bool led1_turn_off = false;
 volatile bool led1_turn_toggle = false;
 
-State led1_state(GPIO::LED1_state);
+State led1_state;
 volatile uint16_t led1_turn_on_counter = 0;
 
 void idle_loop();
@@ -34,6 +34,8 @@ int main(){
 
 void idle_loop(){
     while(true){
+        led1_state.update_state(GPIO::LED1_state());
+
         if (led1_turn_on) {
             GPIO::LED1_on();
             led1_turn_on = false;

@@ -7,16 +7,15 @@
 
 class State{
 public:
-    State(bool (*p_pin_on_state)());
+    State();
     
-    void update_state();
+    void update_state(bool current_state);
     bool is_on() const;
     bool is_off() const;
     bool is_switched_on() const;
     bool is_switched_off() const;
 
-protected:
-    bool (*_p_pin_on_state)();
+private:
     bool _previous_state;
     bool _on;
     bool _off;
