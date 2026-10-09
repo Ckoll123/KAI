@@ -14,6 +14,7 @@ public:
     State state;
     
 private:
+    bool (*_p_pin_on_state)();
     bool _prev_raw_state;
 
     float _time_sample;

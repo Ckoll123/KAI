@@ -1,7 +1,8 @@
 #include "HAL/Button.h"
 
 Button::Button(bool (*p_pin_on_state)(), float time_sample, float debounce_period_sec) :
-    state(p_pin_on_state),
+    state(),
+    _p_pin_on_state(p_pin_on_state),
     _prev_raw_state(false),
     _time_sample(time_sample),
     _debounce_period(debounce_period_sec),
@@ -10,7 +11,7 @@ Button::Button(bool (*p_pin_on_state)(), float time_sample, float debounce_perio
 
 
 void Button::update_state() {
-    bool pin_state = state.get_pin_state();
+    bool pin_state = _p_pin_on_state();
     bool stable_state = state.is_on();
     
     if (pin_state != _prev_raw_state) {

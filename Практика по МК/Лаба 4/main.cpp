@@ -17,10 +17,11 @@ volatile bool led1_turn_on = false;
 volatile bool led1_turn_off = false;
 volatile bool led1_turn_toggle = false;
 
-State led1_state(GPIO::LED1_state);
-volatile uint16_t led1_turn_on_counter = 0;
+State led1_state;
+volatile uint16_t led1_on_counter = 0;
+volatile uint16_t led1_sw_on_counter = 0;
 
-Button button_K1(GPIO::K1_state, static_cast<float>(INTERRUPT_PERIOD_SEC), 0.1);
+Button button_K1(K1_state, static_cast<float>(INTERRUPT_PERIOD_SEC), 0.1);
 
 void idle_loop();
 
@@ -46,7 +47,7 @@ int main(){
     ConfigCpuTimer(&CpuTimer0, 150, INTERRUPT_PERIOD_US);
     CpuTimer0Regs.TCR.all = 0x4010;
 
-    GPIO::GPIO_setup();
+    GPIO_setup();
 
     EINT;
 
@@ -60,39 +61,43 @@ int main(){
 
 void idle_loop(){
     while(true){
+        idle_counter++;
+        
+        led1_state.update_state(LED1_state());
+
         if (led1_turn_on) {
-            GPIO::LED1_on();
+            LED1_on();
             led1_turn_on = false;
         }
 
         if (led1_turn_off) {
-            GPIO::LED1_off();
+            LED1_off();
             led1_turn_off = false;
         }
 
         if (led1_turn_toggle) {
-            GPIO::LED1_toggle();
+            LED1_toggle();
             led1_turn_off = false;
         }
 
         if (led1_state.is_on()) {
-            idle_counter++;
+            led1_on_counter++;
         }
 
         if (led1_state.is_switched_on()) {
-            led1_turn_on_counter++;
+            led1_sw_on_counter++;
         }
     }
 }
 
 
 
-void  CPU_Timer0(){
+void CPU_Timer0(){
     CpuTimer0.InterruptCount++;
 
     button_K1.update_state();
     if (button_K1.state.is_switched_on()) {
-        GPIO::LED1_toggle();
+        LED1_toggle();
     }
 
     PieCtrlRegs.PIEACK.all |= PIEACK_GROUP1;
