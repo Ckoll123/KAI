@@ -1,7 +1,7 @@
 #include "HAL/GPIO.h"
 
 
-void GPIO::GPIO_setup(){
+void GPIO_setup(){
     EALLOW;
 
     // GPIO 60 (LED1) as output
@@ -20,41 +20,41 @@ void GPIO::GPIO_setup(){
 }   // GPIO_setup
 
 
-void GPIO::LED1_on(){
+void LED1_on(){
     GpioDataRegs.GPBCLEAR.bit.GPIO60 = 1;
 }   // LED1_on
 
 
-void GPIO::LED1_off(){
+void LED1_off(){
     GpioDataRegs.GPBSET.bit.GPIO60 = 1;
 }   // LED1_off
 
 
-void GPIO::LED1_toggle(){
+void LED1_toggle(){
     GpioDataRegs.GPBTOGGLE.bit.GPIO60 = 1;
 }   // LED1_toggle
 
 
-bool GPIO::LED1_state(){
+bool LED1_state(){
     return !GpioDataRegs.GPBDAT.bit.GPIO60;
 }   // LED1_state
 
 
-void GPIO::LED2_on(){
+void LED2_on(){
     GpioDataRegs.GPBCLEAR.bit.GPIO61 = 1;
 }   // LED2_on
 
 
-void GPIO::LED2_off(){
+void LED2_off(){
     GpioDataRegs.GPBSET.bit.GPIO61 = 1;
 }   // LED2_off
 
 
-void GPIO::LED2_toggle(){
+void LED2_toggle(){
     GpioDataRegs.GPBTOGGLE.bit.GPIO61 = 1;
 }   // LED2_toggle
 
 
-bool GPIO::LED2_state(){
+bool LED2_state(){
     return !GpioDataRegs.GPBDAT.bit.GPIO61;
 }   // LED2_state
