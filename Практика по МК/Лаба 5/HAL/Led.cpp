@@ -35,6 +35,11 @@ void Led::toggle(){
 }
 
 
+void Led::update_state(){
+    state.update_state(_p_pin_state());
+}
+
+
 void Led::blink_by_time(float led_on_time_sec, float led_off_time_sec){
     state.update_state(_p_pin_on_state());
 

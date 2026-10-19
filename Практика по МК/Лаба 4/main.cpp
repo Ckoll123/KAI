@@ -13,9 +13,6 @@
 interrupt void CPU_Timer0();
 
 volatile uint16_t idle_counter = 0;
-volatile bool led1_turn_on = false;
-volatile bool led1_turn_off = false;
-volatile bool led1_turn_toggle = false;
 
 State led1_state;
 volatile uint16_t led1_on_counter = 0;
@@ -64,21 +61,6 @@ void idle_loop(){
         idle_counter++;
         
         led1_state.update_state(LED1_state());
-
-        if (led1_turn_on) {
-            LED1_on();
-            led1_turn_on = false;
-        }
-
-        if (led1_turn_off) {
-            LED1_off();
-            led1_turn_off = false;
-        }
-
-        if (led1_turn_toggle) {
-            LED1_toggle();
-            led1_turn_off = false;
-        }
 
         if (led1_state.is_on()) {
             led1_on_counter++;

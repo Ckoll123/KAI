@@ -17,6 +17,8 @@ public:
     void set_off();
     void toggle();
 
+    void update_state();
+
     void blink_by_time(float led_on_time_sec, float led_off_time_sec);
     uint32_t get_blink_counter() const;
 

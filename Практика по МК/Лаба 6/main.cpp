@@ -15,9 +15,6 @@
 interrupt void CPU_Timer0();
 
 volatile uint16_t idle_counter = 0;
-volatile bool led1_turn_on = false;
-volatile bool led1_turn_off = false;
-volatile bool led1_turn_toggle = false;
 
 State led1_state(GPIO::LED1_state);
 volatile uint16_t led1_turn_on_counter = 0;
