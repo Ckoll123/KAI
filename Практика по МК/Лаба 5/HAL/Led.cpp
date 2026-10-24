@@ -36,7 +36,7 @@ void Led::toggle(){
 
 
 void Led::update_state(){
-    state.update_state(_p_pin_state());
+    state.update_state(_p_pin_on_state());
 }
 
 

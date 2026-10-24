@@ -16,11 +16,11 @@ interrupt void CPU_Timer0();
 
 volatile uint16_t idle_counter = 0;
 
-State led1_state(GPIO::LED1_state);
+State led1_state();
 volatile uint16_t led1_turn_on_counter = 0;
 
-Button button_K1(GPIO::K1_state, static_cast<float>(INTERRUPT_PERIOD_SEC), 0.1);
-Led led1(GPIO::LED1_state, static_cast<float>(INTERRUPT_PERIOD_SEC));
+Button button_K1(K1_state, static_cast<float>(INTERRUPT_PERIOD_SEC), 0.1);
+Led led1(LED1_state, static_cast<float>(INTERRUPT_PERIOD_SEC));
 SCI_port sci_a(SCIa);
 
 volatile bool sendBit = false;
@@ -52,10 +52,10 @@ int main(){
     ConfigCpuTimer(&CpuTimer0, 150, INTERRUPT_PERIOD_US);
     CpuTimer0Regs.TCR.all = 0x4010;
 
-    GPIO::GPIO_setup();
+    GPIO_setup();
     sci_a.initGPIO();
 
-    led1.configure(GPIO::LED1_on, GPIO::LED1_off, GPIO::LED1_toggle);
+    led1.configure(LED1_on, LED1_off, LED1_toggle);
 
     SCI_port_config config;
     config.self_test_mode = true;
@@ -77,15 +77,15 @@ int main(){
 
 void idle_loop(){
     while(true){
-        if (sci_a.is_new_message()){
-            ReceivedChar = sci_a.receive_message();
-            if(ReceivedChar != SendChar) ErrorCount++;
-        }
-
-        if (sendBit) {
-            sendBit = false;
-            sci_a.transmit_message(led1.get_blink_counter());
-        }
+//        if (sci_a.is_new_message()){
+//            ReceivedChar = sci_a.receive_message();
+//            if(ReceivedChar != SendChar) ErrorCount++;
+//        }
+//
+//        if (sendBit) {
+//            sendBit = false;
+//            sci_a.transmit_message(led1.get_blink_counter());
+//        }
     }
 }
 

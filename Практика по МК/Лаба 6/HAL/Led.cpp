@@ -2,7 +2,8 @@
 
 
 Led::Led(bool (*p_pin_on_state)(), float time_sample) :
-    state(p_pin_on_state),
+    state(),
+    _p_pin_on_state(p_pin_on_state),
     _p_LED_on(0),
     _p_LED_off(0),
     _p_LED_toggle(0),
@@ -35,12 +36,12 @@ void Led::toggle(){
 
 
 void Led::update_state(){
-    state.update_state(_p_pin_state());
+    state.update_state(_p_pin_on_state());
 }
 
 
 void Led::blink_by_time(float led_on_time_sec, float led_off_time_sec){
-    state.update_state();
+    state.update_state(_p_pin_on_state());
 
     if (state.is_on()){
         if (_blink_timer >= led_on_time_sec){
@@ -63,7 +64,7 @@ void Led::blink_by_time(float led_on_time_sec, float led_off_time_sec){
 
 void Led::reset(){
     set_off();
-    state.update_state();
+    state.update_state(_p_pin_on_state());
     _blink_counter = 0;
     _blink_timer = 0;
 }

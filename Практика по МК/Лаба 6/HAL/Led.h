@@ -28,6 +28,7 @@ public:
     State state;
 
 private:
+    bool (*_p_pin_on_state)();
     void (*_p_LED_on)();
     void (*_p_LED_off)();
     void (*_p_LED_toggle)();
